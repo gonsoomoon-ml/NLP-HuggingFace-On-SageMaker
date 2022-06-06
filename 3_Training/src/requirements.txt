@@ -1,0 +1,4 @@
+torch==1.8.1
+# transformers==4.18.0
+transformers==4.17.0
+datasets==2.2.2
