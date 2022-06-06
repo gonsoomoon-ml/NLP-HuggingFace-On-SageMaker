@@ -50,14 +50,12 @@ def _get_train_data_loader(args, train_texts, train_labels, logger):
     if args.use_subset_train_sampler:
         subset_train_sampler = create_random_sampler(train_dataset, frac=0.01, is_shuffle=True, logger=logger)
         train_loader = DataLoader(dataset=train_dataset, 
-                                  shuffle=False, 
-                                  batch_size=16, 
+                                  batch_size=args.train_batch_size, 
                                   sampler=subset_train_sampler)    
     else:
         train_sampler = create_random_sampler(train_dataset, frac=1, is_shuffle=True, logger=logger)
         train_loader = DataLoader(dataset=train_dataset, 
-                                  shuffle=False, 
-                                  batch_size=16, 
+                                  batch_size=args.train_batch_size, 
                                   sampler=train_sampler)    
 
     return train_loader, train_dataset
@@ -77,11 +75,30 @@ def _get_val_data_loader(args, val_texts, val_labels, logger):
     eval_sampler = create_random_sampler(val_dataset, frac=1, is_shuffle=False, logger=logger)
     eval_loader = DataLoader(dataset=val_dataset, 
                                   shuffle=False, 
-                                  batch_size=16, 
+                                  batch_size=args.eval_batch_size, 
                                   sampler=eval_sampler)    
 
     return eval_loader        
 
+
+def _get_test_data_loader(args, test_texts, test_labels, logger):        
+    '''
+    test data loader 생성
+    '''
+    # Electra Model 입력 인코딩 생성    
+    tokenizer = ElectraTokenizer.from_pretrained(args.tokenizer_id)
+
+    test_encodings = tokenizer(test_texts, truncation=True, padding=True)
+    test_dataset = NSMCDataset(test_encodings, test_labels)
+    logger.info(f"size of test_dataset : {len(test_dataset)}")
+
+    test_sampler = create_random_sampler(test_dataset, frac=1, is_shuffle=False, logger=logger)
+    test_loader = DataLoader(dataset=test_dataset, 
+                                  shuffle=False, 
+                                  batch_size=args.test_batch_size, 
+                                  sampler=test_sampler)    
+
+    return test_loader        
 
 
 
@@ -182,6 +199,59 @@ def eval_epoch(args, model, epoch, device, logger, eval_loader):
                 )
             )  
     return np.mean(acc_list)
+
+def test_model(args, model, device, logger, test_loader):
+    '''
+    테스트 데이타로 추론하여 평가
+    '''
+    acc_list=[]
+    model.eval()
+    with torch.no_grad():
+        for batch in test_loader:
+            input_ids = batch['input_ids'].to(device)
+            attention_mask = batch['attention_mask'].to(device)
+            labels = batch['labels'].to(device)
+            outputs = model(input_ids, attention_mask=attention_mask, labels=labels)
+            
+            acc = accuracy(outputs[1], labels)
+            acc_list.append(acc)
+            
+
+        logger.info(
+            "Test Accuracy: Acc={:.6f};".format(
+            np.mean(acc_list))
+            )  
+        
+    return np.mean(acc_list)
+
+def test_model_with_predicton(model, device, logger, test_loader):
+    '''
+    테스트 데이타로 추론하여 평가
+    '''
+    acc_list=[]
+    prediction_list = []
+    label_list = []
+    
+    model.eval()
+    with torch.no_grad():
+        for batch in test_loader:
+            input_ids = batch['input_ids'].to(device)
+            attention_mask = batch['attention_mask'].to(device)
+            labels = batch['labels'].to(device)
+            outputs = model(input_ids, attention_mask=attention_mask, labels=labels)
+            
+            acc = accuracy(outputs[1], labels)
+            acc_list.append(acc)
+            prediction_list.append(outputs[1])
+            label_list.append(labels)
+
+        logger.info(
+            "Test Accuracy: Test-Acc : {:.6f};".format(
+            np.mean(acc_list))
+            )  
+        
+    return np.mean(acc_list), prediction_list, label_list
+
 
         
 def save_best_model(model, acc, epoch, best_acc, model_dir, logger):        
