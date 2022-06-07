@@ -8,9 +8,12 @@ Hugging Face 는 SageMaker 와 협업을 통하여 조금 더 쉽게 실무에 �
 이 워크샵에서는 네이버 영화 리뷰 데이터 셋을 통한 감성 분석을 박장원님이 만드신 [KoELECTRA Pre-Trained Model](https://github.com/monologg/KoELECTRA) 를 통해서 Downstream Task 의 하나인 감성 분석을 하겠습니다.
 또한 김대근님이 만든신 [모두를 위한 클라우드 네이티브 한국어 자연어 처리 모델 훈련 및 활용법 (부제: 허깅페이스(Hugging Face)와 Amazon SageMaker가 만났다!)](https://github.com/daekeun-ml/sm-huggingface-kornlp) 워크샵의 많은 내용을 참조 하였습니다.
 
-# 2. 주요 내용
+# 2. 주요 사용 기술
 - Hugging Face 의 한국어 감성(Sentiment) 분석에 대해서 "스크래치 코드" 가지고 파인 튜닝을 배움.
+    - 사용자 데이터 셋을 생성하여 Pytorch, HF Trainer 를 통해 훈련
 - 세이지 메이커에서 "스크래치 코드" 를 훈련 할 수 있게 로컬 모드, 호스트 모드로 훈련 함. (로컬 모드, 호스트 모드는 하단의 "참고" 섹션 참조)
+    - Pytorch SubsetSampler 등을 통하여 개발의 용이성을 높임.
+    - 세이지 메이커 "실험" 을 통한 훈련 잡 추적
 - Hugging Face 세이지 메이커 빌트인 도커를 사용하여 세이지 메이커 앤드포인트 생성 및  추론
     - 네이버 영화 리뷰 테스트 데이터에 대한  (약 50,000 개) 감성 분류 (약 89% 정확도 보임.)
 
