@@ -154,11 +154,10 @@ def train(args):
                                        epoch, 
                                        best_acc,
                                        args.model_dir,
-                                       logger)            
-            
-
-    ### Save Model 을 다른 곳에 저장
-    _save_model(model, args.model_dir, f'{config.model_name}.pth', logger)  
+                                       logger)       
+        else:
+            ### Save Model 을 다른 곳에 저장
+            _save_model(model, args.model_dir, f'{config.model_name}.pth', logger)  
 
             
     # 테스트 셋 검증
