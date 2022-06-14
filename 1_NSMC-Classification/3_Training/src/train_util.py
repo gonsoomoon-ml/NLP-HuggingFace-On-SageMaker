@@ -78,7 +78,7 @@ def _get_val_data_loader(args, val_texts, val_labels, logger):
                                   batch_size=args.eval_batch_size, 
                                   sampler=eval_sampler)    
 
-    return eval_loader        
+    return eval_loader, val_dataset        
 
 
 def _get_test_data_loader(args, test_texts, test_labels, logger):        
@@ -98,7 +98,7 @@ def _get_test_data_loader(args, test_texts, test_labels, logger):
                                   batch_size=args.test_batch_size, 
                                   sampler=test_sampler)    
 
-    return test_loader        
+    return test_loader , test_dataset       
 
 
 
@@ -286,3 +286,28 @@ def _save_model(model, model_dir, model_weight_file_name, logger):
     logger.info(f"the model is saved at {path}")    
     # recommended way from http://pytorch.org/docs/master/notes/serialization.html
     torch.save(model.state_dict(), path)
+
+
+######################################
+# Trainer
+######################################
+
+from sklearn.metrics import accuracy_score, precision_recall_fscore_support
+
+# compute metrics function for binary classification
+def compute_metrics(pred):
+    labels = pred.label_ids
+    preds = pred.predictions.argmax(-1)
+    precision, recall, f1, _ = precision_recall_fscore_support(labels, preds, average="binary")
+    acc = accuracy_score(labels, preds)
+    return {"accuracy": acc, "f1": f1, "precision": precision, "recall": recall}
+
+def compute_metrics_with_label(preds, labels):
+    precision, recall, f1, _ = precision_recall_fscore_support(labels, preds, average="binary")
+    acc = accuracy_score(labels, preds)
+    return {"accuracy": round(acc,3), 
+            "f1": round(f1,3), 
+            "precision": round(precision,3), 
+            "recall": round(recall,3)}
+
+    

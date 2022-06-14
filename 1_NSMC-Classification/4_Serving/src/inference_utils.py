@@ -48,6 +48,48 @@ def inference_batch(df, chunk_size, runtime_client, hf_predictor):
     pred_list = []
     score_list = []
 
+    for idx, rec in enumerate(chunker(df, chunk_size),1):
+    #     print((rec.doc.tolist()))
+    #     print((rec.label.tolist()))    
+        doc = rec.doc.tolist()
+        payload = {
+           "inputs": doc
+        }
+        payload_dump = json.dumps(payload)
+        result = invoke_endpoint_hf(runtime_client, hf_predictor.endpoint_name, 
+                             payload_dump,
+                             content_type='application/json'
+                            )
+
+
+        for ele in result:
+            # print(ele)
+            pred = ele["label"]
+            score = round(ele["score"],3)   # 스코어 추출
+            pred = np.where(pred=='positive',1,0)
+
+            pred_list.append(pred)
+            score_list.append(score)
+            
+        log_interval = 5
+        if idx % log_interval == 0:
+            print(f"test samples {idx * chunk_size} is done")
+
+    return pred_list, score_list
+
+def inference_batch_pytorch(df, chunk_size, runtime_client, hf_predictor):
+    '''
+    배치 사이즈씩 추론 함.
+    '''
+    def chunker(seq, size):
+        '''
+        chunk 만큼 데이터 제공
+        '''
+        return (seq[pos:pos + size] for pos in range(0, len(seq), size))
+    
+    pred_list = []
+    score_list = []
+
     for rec in chunker(df, chunk_size):
     #     print((rec.doc.tolist()))
     #     print((rec.label.tolist()))    
@@ -63,7 +105,7 @@ def inference_batch(df, chunk_size, runtime_client, hf_predictor):
 
 
         for ele in result:
-            #print(ele)
+            # print(ele)
             pred = ele["label"]
             pred = int(pred.split('_')[-1]) # 레이블 추출
             score = round(ele["score"],3)   # 스코어 추출

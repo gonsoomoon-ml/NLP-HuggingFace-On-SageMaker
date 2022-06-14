@@ -1,3 +1,5 @@
+import os
+
 # project prefix
 project_prefix = 'sm_hugging_nsmc'
 
@@ -20,7 +22,9 @@ model_id = 'monologg/koelectra-small-v3-discriminator'
 # model artifacts
 output_data_dir = f'output/{dataset}'
 model_dir = f'models/{dataset}'
+
 checkpoint_dir = f'checkpoint/{dataset}'
+os.makedirs(checkpoint_dir, exist_ok=True)
 
 # Evaluation 
 is_evaluation = "True"

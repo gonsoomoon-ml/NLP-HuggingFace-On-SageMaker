@@ -59,8 +59,11 @@ Hugging Face 는 SageMaker 와 협업을 통하여 조금 더 쉽게 실무에 �
         - 네이버 영화 감성 리뷰 데이터 
     - 2.1.Train_Scratch.ipynb
         - 감성 분류 (긍정, 부정) 을 위한 파인 튜닝 스케치
-    - 2.2.Train_Local_Script_Mode.ipynb
-        - 세이지 메이커를 이용한 감성 분류 (긍정, 부정) 을 위한 파인 튜닝 (로컬 모드, 호스트 모드)
+    - 2.2.Train_HF_Container.ipynb        
+        - 세이지 메이커를 이용한 감성 분류 (긍정, 부정) 을 위한 파인 튜닝 (로컬 모드, 호스트 모드), Hugging Face 에서 제공하는 Trainer 를 통해 훈련         
+    - [옵션] 2.3.Train_Local_Script_Mode.ipynb
+        - 세이지 메이커를 이용한 감성 분류 (긍정, 부정) 을 위한 파인 튜닝 (로컬 모드, 호스트 모드), 단 Pytorch 로 훈련 함.
+
 
 
 - 4_Serving (필수)
@@ -80,9 +83,11 @@ Hugging Face 는 SageMaker 와 협업을 통하여 조금 더 쉽게 실무에 �
  |-3_Training
  | |-1.1.Prepare_Data_Naver_Review.ipynb
  | |-2.1.Train_Scratch.ipynb
- | |-2.2.Train_Local_Script_Mode.ipynb
+ | |-2.2.Train_HF_Container.ipynb 
+ | |-2.3.Train_Local_Script_Mode.ipynb
  | |-src
  | | |-data_util.py
+ | | |-train_Trainer.py
  | | |-train.py
  | | |-train_util.py
  | | |-requirements.txt
