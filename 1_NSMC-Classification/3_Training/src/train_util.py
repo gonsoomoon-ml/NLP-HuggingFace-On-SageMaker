@@ -262,7 +262,7 @@ def save_best_model(model, acc, epoch, best_acc, model_dir, logger):
             os.makedirs(config.model_dir, exist_ok=True)
             
         ### Save Model 을 다른 곳에 저장
-        _save_model(model, model_dir, f'{config.model_name}.pth', logger)  
+        _save_model(model, model_dir, f'{config.model_name}', logger)  
     else:
         pass
 

@@ -31,7 +31,7 @@ is_evaluation = "True"
 is_test = "True"
 eval_ratio = 0.2
 
-model_name = 'sentimental-electro-hf'
+model_name = 'pytorch_model.bin'
 
 
 

@@ -85,24 +85,6 @@ def train(args):
     logger.info("=====> Loading Train Dataset <===========")                        
     train_loader, train_dataset = _get_train_data_loader(args, train_texts, train_labels, logger)        
         
-    # 테스트 데이터 셋으로 검증 여부
-    if args.is_test:
-        logger.info("=====> Loading Test Dataset <===========")                
-        test_data_filenames = glob(os.path.join(args.test_data_dir, '*_test.txt'))
-        logger.info(f'test_data_filenames {test_data_filenames}')
-
-        # 1개의 파일만 지정 함. 
-        # --> 복수개의 파일시 코드 수정 필요
-        test_file_path = test_data_filenames[0]
-        
-        # 훈련 Text, Label 로딩    
-        test_texts, test_labels = read_nsmc_split(test_file_path)
-
-        logger.info(f'test_file_path {test_file_path}')    
-        logger.debug(f"len: {len(test_texts)} \nSample: {test_texts[0:5]}")
-        logger.debug(f"len: {len(test_labels)} \nSample: {test_labels[0:5]}")
-        
-        test_loader = _get_test_data_loader(args, test_texts, test_labels, logger)                
 
 
     #######################################
@@ -127,7 +109,7 @@ def train(args):
     # 검증 셋 성능평가
     if args.is_evaluation:
         logger.info("=====> Loading Validation Dataset <===========")                                    
-        eval_loader = _get_val_data_loader(args, val_texts, val_labels, logger)        
+        eval_loader, val_dataset = _get_val_data_loader(args, val_texts, val_labels, logger) 
 
     
     best_acc = 0
@@ -165,18 +147,37 @@ def train(args):
                                        logger)       
         else:
             ### Save Model 을 다른 곳에 저장
-            _save_model(model, args.model_dir, f'{config.model_name}.pth', logger)  
+            _save_model(model, args.model_dir, f'{config.model_name}', logger)  
 
             
     # 테스트 셋 검증
     if args.is_test:
-        logger.info("=====> test model performance <===========")                
-        test_loader = _get_test_data_loader(args, test_texts, test_labels, logger)        
+        logger.info("=====> test model performance <===========")               
+        logger.info("=====> Loading Test Dataset <===========")                
+        test_data_filenames = glob(os.path.join(args.test_data_dir, '*_test.txt'))
+        logger.info(f'test_data_filenames {test_data_filenames}')
+
+        # 1개의 파일만 지정 함. 
+        # --> 복수개의 파일시 코드 수정 필요
+        test_file_path = test_data_filenames[0]
+        
+        # 훈련 Text, Label 로딩    
+        test_texts, test_labels = read_nsmc_split(test_file_path)
+
+        logger.info(f'test_file_path {test_file_path}')    
+        logger.debug(f"len: {len(test_texts)} \nSample: {test_texts[0:5]}")
+        logger.debug(f"len: {len(test_labels)} \nSample: {test_labels[0:5]}")
+        
+        test_loader, test_dataset = _get_test_data_loader(args, test_texts, test_labels, logger)                
+        
         acc = test_model(args, 
                         model, 
                         device, 
                         logger,
                         test_loader)
+
+        
+##########################
 
 from transformers.trainer_utils import get_last_checkpoint
 from train_util import compute_metrics, compute_metrics_with_label
