@@ -54,6 +54,7 @@ def extract_news_data(args, news_path, logger):
 
 stop_words = ['가다','있다']
 def Okt_tokenizer(raw, pos=["Noun","Adjective"], stopword=stop_words):
+#def Okt_tokenizer(raw, pos=["Noun"], stopword=stop_words):
     '''
     문장의 토큰나이징 함수
     '''

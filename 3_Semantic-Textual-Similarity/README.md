@@ -1,12 +1,77 @@
 # Semantic Textual Similarity (STS) on SageMaker 워크샵
 
-## 현재 작업 중입니다.
+
+
+# 1. 배경 
+## 1.1. BERT 구조
+
+아래는 BERT 의 구조 입니다. 기본적인 "자연어 문장1 혹은 문장1 및 문장2" 입력이 되어서 Input Embedding Layer --> Transformer Layer --> Contextual Representation of Token 의 Output 이 제공 됩니다. 또한 이 위에 Downstream Task (예: Classification, Translation, Semantic Textual Similairy, Question & Answering ) 두어서 Transfer Learning (Fine Tuning) 을 통하여 여러 작업을 할 수가 있습니다. 
+
+
+![BERT_Structure.png](2_Warming_Up/img/BERT_Structure.png)
+
+(참조: 자연어처리_BERT 기초개념(완전 초보용), https://han-py.tistory.com/252)
+
+## 1.2. BERT 모델 훈련 단계
+
+아래는 SDS 의 블로그에서 제공한 "Pre-Training" --> "Transfer Learning" 을 통하여 다양한 Task 를 수행할 수 있는 것을 보여 주고 있습니다. 
+![bert_fine_tuning.png](img/bert_fine_tuning.png)
+(참조: 스마트한 텍스트 분석을 향한 첫걸음, KoreALBERT, 
+https://www.samsungsds.com/kr/insights/techtoolkit_2021_korealbert.html)
+
+## 1.3. Sentence-BERT
+
+두개의 문장의 유사도 분석에 많이 사용되는 Sentence-BERT 의 추론 아키텍쳐 입니다.
+
+![sentence_bert.png](img/sentence_bert.png)
+(참조: 
+- Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks
+    - https://arxiv.org/abs/1908.10084
+- SentenceTransformers Documentation
+    - https://www.sbert.net/
+)
 
 
 
 
-## 참고 자료
+# 2. 다루는 내용
 
+"3_Training" 폴더의 Semantic Textual Similarity 를 주로 컨텐츠 이지만, Warming-Up 폴더에 다양한 작업에 대한 소개를 하고 있습니다. 
+
+실습은 "1_Setup" --> "2_Warming_Up (스킵 가능)" --> "3_Training" 으로 하시기 바랍니다.
+
+- 1_Setup
+    - 0.Set_Environment.ipynb
+        - 필요한 Python Package 를 설치 합니다.
+- 2_Warming_Up
+    - 0.0.Analyze_KoNLPy.ipynb
+        - 한국어 Tokenizer (형태소 분석기) 를 소개
+    - 1.0.BERT_Tokenizer.ipynb
+        - BERT Tokenizer 소개
+    - 1.1.BERT_Input_Output.ipynb
+        - BERT 추론의 입력 및 출력의 구조를 이해
+    - 1.2.Computing_Sentence_Embeddings.ipynb
+        - BERT Sentence Embedding 이해
+    - 1.3.Semantic_Textual_Similarity.ipynb
+        - STS 소개
+    - 2.1.KeyBERT.ipynb
+        - 문장안에서 Keyword 추출 기술 예시
+    - 2.2.ContextTopicBert-hangul.ipynb
+        - Context 기반한 토픽 모델링
+    - 2.3.BERTopic-Hangul.ipynb
+        - BERT + TF-IDF 를 통한 토픽 모델링
+    - 3.1.parallel_dask.ipynb        
+        - DASK 병렬 처리 프레임워크 소개
+- 3_Training
+    - 1.1.sbert-training-develop.ipynb 
+        - sentence bert 모델 훈련
+    - 1.2.sbert-inference-develop.ipynb 
+        - sentence bert 모델 추론
+        
+
+# Reference:
+- 딥 러닝을 이용한 자연어 처리 입문
+    - https://wikidocs.net/book/2155
 - Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks
     - https://arxiv.org/pdf/1908.10084.pdf
 * 논문 설명 - Sentence-BERT : Sentence Embeddings using Siamese BERT-Networks
