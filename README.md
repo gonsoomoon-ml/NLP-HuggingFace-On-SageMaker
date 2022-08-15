@@ -2,6 +2,9 @@
 
 ---
 
+[Hot Update] 현재의 폴더에서 "문장 유사성 분석 폴더" 가 추가 되었습니다. 아래 링크를 통해서 확인 해주세요.
+- [3_Semantic-Textual-Similarity](3_Semantic-Textual-Similarity/README.md)
+
 # 1. 배경
 [Hugging Face](https://huggingface.co/)는 [Transformer](https://en.wikipedia.org/wiki/Transformer_(machine_learning_model)#:~:text=A%20transformer%20is%20a%20deep,and%20computer%20vision%20(CV).) 를 이용하여 자연어 처리, 이미지 등의 작업을 쉽게 하기 위해서 만들어진 오픈 소스 라이브러리 입니다.
 Hugging Face 는 SageMaker 와 협업을 통하여 조금 더 쉽게 실무에 적용할 수 있게 해주고 있습니다.
