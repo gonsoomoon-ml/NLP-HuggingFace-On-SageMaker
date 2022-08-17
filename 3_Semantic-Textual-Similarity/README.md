@@ -32,9 +32,10 @@ https://www.samsungsds.com/kr/insights/techtoolkit_2021_korealbert.html)
 )
 
 
+# 2. 실습 환경
+- [중요] 이 워크샵은 SageMaker Classic Notebook `ml.p3.2xlarge` 에서 테스트 되었습니다. 기타 GPU 가 있는 SageMaker Classic Notebook 의 사용을 권장 합니다. 그리고 로컬의 Storage (EBS) 를 `100 GB` 이상으로 생성해서 사용해주세요.
 
-
-# 2. 다루는 내용
+# 3. 다루는 내용
 
 "3_Training" 폴더의 Semantic Textual Similarity 를 주로 컨텐츠 이지만, Warming-Up 폴더에 다양한 작업에 대한 소개를 하고 있습니다. 
 
