@@ -1,4 +1,4 @@
-# Semantic Textual Similarity (STS) on SageMaker 워크샵
+# Semantic Textual Similarity (STS) 및 BERT Output Token Embedding 활용
 
 
 
