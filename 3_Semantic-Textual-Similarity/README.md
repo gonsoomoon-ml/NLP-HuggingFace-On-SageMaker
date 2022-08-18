@@ -31,6 +31,13 @@ https://www.samsungsds.com/kr/insights/techtoolkit_2021_korealbert.html)
     - https://www.sbert.net/
 )
 
+### Sentence-Transformer 작동 방식
+![sentence_transformer.png](img/sentence_transformer.png)
+(참조: 
+- Train and Fine-Tune Sentence Transformers Models
+    - https://huggingface.co/blog/how-to-train-sentence-transformers
+
+
 
 # 2. 실습 환경
 - [중요] 이 워크샵은 SageMaker Classic Notebook `ml.p3.2xlarge` 에서 테스트 되었습니다. 기타 GPU 가 있는 SageMaker Classic Notebook 의 사용을 권장 합니다. 그리고 로컬의 Storage (EBS) 를 `100 GB` 이상으로 생성해서 사용해주세요.
