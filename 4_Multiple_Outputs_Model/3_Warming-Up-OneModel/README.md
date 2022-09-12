@@ -11,6 +11,7 @@
     - 캐글 Toxic 멀티 레이블링 데이터 생성
 - 1.3.Prepare_Data_Translated_KaggleToxic.ipynb
     - 캐글 Toxic 데이터를 한글로 번역후에 데이터 셋 생성
+    - [중요] 현재 번역 데이터 제공하지 않음.
 - 2.1.Experiment_BCELoss.ipynb
-    - 멀티 레이블링 모델 생성
-
+    - 멀티 레이블링 모델 생성 
+  
